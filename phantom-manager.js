@@ -25,7 +25,10 @@
         // Mocha needs a process.stdout.write in order to change the cursor position.
         M.process = M.process || {}
         M.process.stdout = M.process.stdout || process.stdout
-        M.process.stdout.write = function(outputString) { window.callPhantom({ stdout: outputString }) }
+        if (M.process.env.DEBUG === true) {
+          M.process.stdout.write = function(outputString) { window.callPhantom({ stdout: outputString }) }
+        }
+        // M.process.stdout.write = function(outputString) { window.callPhantom({ stdout: outputString }) }
         window.callPhantom({ getColWith: true })
     }
 
