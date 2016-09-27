@@ -3,7 +3,7 @@
  */
 (function(){
 
-    // A shim for non ES5 supporting browsers, like PhantomJS. Lovingly inspired by:
+    // Workaround for non ES5 supporting browsers, like PhantomJS. Lovingly inspired by:
     // http://www.angrycoding.com/2011/09/to-bind-or-not-to-bind-that-is-in.html
     if (!('bind' in Function.prototype)) {
         Function.prototype.bind = function() {
@@ -21,15 +21,15 @@
         return (!readyState || readyState == 'loaded' || readyState == 'complete' || readyState == 'uninitialized')
     }
 
-    function shimMochaProcess(M) {
+    function scrubMochaProcess(M) {
         // Mocha needs a process.stdout.write in order to change the cursor position.
         M.process = M.process || {}
         M.process.stdout = M.process.stdout || process.stdout
-        M.process.stdout.write = function(s) { window.callPhantom({ stdout: s }) }
+        M.process.stdout.write = function(outputString) { window.callPhantom({ stdout: outputString }) }
         window.callPhantom({ getColWith: true })
     }
 
-    function shimMochaInstance(m) {
+    function callPhantomFromMocha(m) {
         var origRun = m.run, origUi = m.ui
         m.ui = function() {
             var retval = origUi.apply(mocha, arguments)
@@ -71,8 +71,8 @@
 
     Object.defineProperty(window, 'initMochaPhantomJS', {
         value: function () {
-            shimMochaProcess(Mocha)
-            shimMochaInstance(mocha)
+            scrubMochaProcess(Mocha)
+            callPhantomFromMocha(mocha)
             delete window.initMochaPhantomJS
         },
         configurable: true

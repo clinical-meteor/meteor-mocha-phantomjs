@@ -1,4 +1,4 @@
-import './browser-shim.js';
+import './phantom-manager.js';
 import { mocha } from 'meteor/practicalmeteor:mocha-core';
 
 // Run the client tests. Meteor calls the `runTests` function exported by
