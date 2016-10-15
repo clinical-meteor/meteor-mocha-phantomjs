@@ -1,5 +1,5 @@
 Package.describe({
-  name: "cliical:mocha-phantomjs",
+  name: "clinical:mocha-phantomjs",
   summary: "Run package or app tests with Mocha+PhantomJS and report all results in the server console",
   git: "https://github.com/clinical-meteor/meteor-mocha-phantomjs.git",
   version: '0.1.7',
