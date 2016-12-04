@@ -1,4 +1,4 @@
-import { mochaInstance } from 'meteor/clinical:mocha-core';
+import { mochaInstance } from 'meteor/practicalmeteor:mocha-core';
 import { startPhantom } from 'meteor/clinical:phantomjs-tests';
 
 const reporter = process.env.SERVER_TEST_REPORTER || 'spec';
