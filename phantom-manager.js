@@ -22,17 +22,29 @@
     }
 
     function scrubMochaProcess(M) {
+        if (process.env.DEBUG) {
+          console.log("scrubMochaProcess");
+        }
+
         // Mocha needs a process.stdout.write in order to change the cursor position.
         M.process = M.process || {}
         M.process.stdout = M.process.stdout || process.stdout
         if (M.process.env.DEBUG === true) {
-          M.process.stdout.write = function(outputString) { window.callPhantom({ stdout: outputString }) }
+          M.process.stdout.write = function(outputString) {
+            window.callPhantom({
+              stdout: outputString
+            })
+          }
         }
         // M.process.stdout.write = function(outputString) { window.callPhantom({ stdout: outputString }) }
         window.callPhantom({ getColWith: true })
     }
 
     function callPhantomFromMocha(m) {
+        if (process.env.DEBUG) {
+          console.log("callPhantomFromMocha", m);
+        }
+
         var origRun = m.run, origUi = m.ui
         m.ui = function() {
             var retval = origUi.apply(mocha, arguments)
